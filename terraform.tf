@@ -8,6 +8,11 @@ terraform {
     }
   }
   required_providers {
+    civo = {
+      source  = "civo/civo"
+      version = "1.1.5"
+    }
+
     tls = {
       source  = "hashicorp/tls"
       version = "~> 4.0.5"

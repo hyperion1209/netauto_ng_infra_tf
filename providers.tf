@@ -7,3 +7,7 @@ provider "helm" {
     config_path = "~/.kube/config"
   }
 }
+
+provider "civo" {
+  region = local.region
+}

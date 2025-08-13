@@ -8,13 +8,12 @@ resource "helm_release" "prometheus" {
 
   set = [
     {
-      name = "server.persistentVolume.storageClass"
+      name  = "server.persistentVolume.storageClass"
       value = "civo-volume"
     },
     {
-      name = "alertmanager.persistence.storageClass"
+      name  = "alertmanager.persistence.storageClass"
       value = "civo-volume"
     }
   ]
 }
-

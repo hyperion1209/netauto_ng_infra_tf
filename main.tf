@@ -1,17 +1,43 @@
+#
+# Certificate Issuer
+#
 module "cert_issuer" {
-  source = "./modules/cert_issuer"
-  lb_public_ip = data.civo_loadbalancer.traefik.public_ip
-  domain = local.domains[local.profile]
+  source       = "./modules/cert_issuer"
 }
 
+#
+# Domain
+#
+resource "civo_dns_domain_name" "this" {
+  name = local.domains[local.profile]
+}
+
+#
+# Services
+#
 module "prometheus" {
-  source = "./modules/prometheus"
-  lb_public_ip = data.civo_loadbalancer.traefik.public_ip
-  domain = local.domains[local.profile]
+  count        = local.enabled_services.prometheus ? 1 : 0
+  source       = "./modules/prometheus"
 }
 
 module "grafana" {
-  source = "./modules/grafana"
+  count        = local.enabled_services.grafana ? 1 : 0
+  source       = "./modules/grafana"
+}
+
+#
+# Service Ingress
+#
+module "ingress" {
+  for_each     = local.ingress_services
+  source       = "./modules/ingress"
+  domain_id       = civo_dns_domain_name.this.id
+  domain_name = civo_dns_domain_name.this.name
   lb_public_ip = data.civo_loadbalancer.traefik.public_ip
-  domain = local.domains[local.profile]
+  service_name = each.key
+  service_port = each.value
+
+  providers = {
+    civo = civo
+  }
 }

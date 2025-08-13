@@ -6,7 +6,3 @@ terraform {
     }
   }
 }
-
-provider "civo" {
-  region = var.region
-}
