@@ -16,4 +16,4 @@ persistence:
   storageClassName: civo-volume
 
 # Optional: Enable admin password via variable
-# adminPassword: ${admin_password}
+adminPassword: ${admin_password}

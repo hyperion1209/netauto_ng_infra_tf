@@ -17,3 +17,11 @@ resource "helm_release" "prometheus" {
     }
   ]
 }
+
+data "kubernetes_service_v1" "prometheus" {
+  metadata {
+    name      = "prometheus-server"
+    namespace = "prometheus"
+  }
+  depends_on = [ helm_release.prometheus ]
+}

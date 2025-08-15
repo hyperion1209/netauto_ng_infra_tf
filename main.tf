@@ -23,6 +23,8 @@ module "prometheus" {
 module "grafana" {
   count  = local.enabled_services.grafana ? 1 : 0
   source = "./modules/grafana"
+  prometheus_ip = module.prometheus[0].service_attrs.ip
+  prometheus_port = module.prometheus[0].service_attrs.port
 }
 
 #
