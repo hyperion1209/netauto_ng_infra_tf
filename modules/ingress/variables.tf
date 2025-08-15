@@ -4,7 +4,7 @@ variable "domain_id" {
 
 variable "domain_name" {
   type = string
-  
+
 }
 
 variable "lb_public_ip" {

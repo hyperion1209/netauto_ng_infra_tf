@@ -1,12 +1,12 @@
 data "kubernetes_service_v1" "prometheus" {
   metadata {
-    name = "prometheus-server"
+    name      = "prometheus-server"
     namespace = "prometheus"
   }
 }
 
 locals {
-  prometheus_url = "http://${data.kubernetes_service_v1.prometheus.spec.0.cluster_ip}:${data.kubernetes_service_v1.prometheus.spec.0.port.0.port}"
+  prometheus_url = "http://${data.kubernetes_service_v1.prometheus.spec[0].cluster_ip}:${data.kubernetes_service_v1.prometheus.spec[0].port[0].port}"
 }
 
 resource "helm_release" "grafana" {
@@ -19,7 +19,7 @@ resource "helm_release" "grafana" {
 
   values = [
     templatefile("${path.module}/values.tpl", {
-      prometheus_url         = local.prometheus_url
+      prometheus_url = local.prometheus_url
     })
   ]
 }
