@@ -6,7 +6,10 @@ locals {
     dev  = "netauto-ng-dev.org"
     prod = "netauto-ng.org"
   }
-  cluster_name = "netauto-ng-dev-cluster"
+  k8s_cluster = {
+    name = "netauto-ng-dev-cluster"
+    storage_class_name = "civo-volume"
+  }
   enabled_services = {
     prometheus = true
     grafana    = false
@@ -17,6 +20,6 @@ locals {
 }
 
 data "civo_loadbalancer" "traefik" {
-  name   = "${local.cluster_name}-kube-system-traefik"
+  name   = "${local.k8s_cluster.name}-kube-system-traefik"
   region = local.region
 }

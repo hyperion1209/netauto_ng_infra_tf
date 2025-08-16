@@ -8,7 +8,7 @@ resource "helm_release" "prometheus" {
 
   values = [
     templatefile("${path.module}/values.tpl", {
-      storage_class_name = "civo-volume"
+      storage_class_name = var.storage_class_name
     })
   ]
 }

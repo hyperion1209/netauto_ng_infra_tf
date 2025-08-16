@@ -18,6 +18,7 @@ resource "civo_dns_domain_name" "this" {
 module "prometheus" {
   count  = local.enabled_services.prometheus ? 1 : 0
   source = "./modules/prometheus"
+  storage_class_name = local.k8s_cluster.storage_class_name
 }
 
 module "grafana" {
@@ -25,6 +26,7 @@ module "grafana" {
   source = "./modules/grafana"
   prometheus_ip = module.prometheus[0].service_attrs.ip
   prometheus_port = module.prometheus[0].service_attrs.port
+  storage_class_name = local.k8s_cluster.storage_class_name
 }
 
 #

@@ -5,3 +5,7 @@ variable "prometheus_ip" {
 variable "prometheus_port" {
   type = number
 }
+
+variable "storage_class_name" {
+  type = string
+}
