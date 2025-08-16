@@ -21,7 +21,7 @@ module "prometheus" {
 }
 
 module "grafana" {
-  count  = local.enabled_services.grafana ? 1 : 0
+  count  = local.enabled_services.grafana && local.enabled_services.prometheus ? 1 : 0
   source = "./modules/grafana"
   prometheus_ip = module.prometheus[0].service_attrs.ip
   prometheus_port = module.prometheus[0].service_attrs.port
@@ -38,6 +38,8 @@ module "ingress" {
   lb_public_ip = data.civo_loadbalancer.traefik.public_ip
   service_name = each.key
   service_port = each.value
+
+  depends_on = [ module.grafana ]
 
   providers = {
     civo = civo
