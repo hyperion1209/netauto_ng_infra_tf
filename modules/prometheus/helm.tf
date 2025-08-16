@@ -6,15 +6,10 @@ resource "helm_release" "prometheus" {
   namespace        = "prometheus"
   create_namespace = true
 
-  set = [
-    {
-      name  = "server.persistentVolume.storageClass"
-      value = "civo-volume"
-    },
-    {
-      name  = "alertmanager.persistence.storageClass"
-      value = "civo-volume"
-    }
+  values = [
+    templatefile("${path.module}/values.tpl", {
+      storage_class_name = "civo-volume"
+    })
   ]
 }
 

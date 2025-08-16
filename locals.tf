@@ -9,10 +9,10 @@ locals {
   cluster_name = "netauto-ng-dev-cluster"
   enabled_services = {
     prometheus = true
-    grafana    = true
+    grafana    = false
   }
   ingress_services = {
-    grafana = 80
+    # grafana = 80
   }
 }
 

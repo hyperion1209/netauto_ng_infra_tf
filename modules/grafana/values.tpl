@@ -13,7 +13,7 @@ datasources:
 persistence:
   type: pvc
   enabled: true
-  storageClassName: civo-volume
+  storageClassName: ${storage_class_name}
 
 # Optional: Enable admin password via variable
 adminPassword: ${admin_password}
