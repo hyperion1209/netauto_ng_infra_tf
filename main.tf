@@ -15,6 +15,11 @@ resource "civo_dns_domain_name" "this" {
 #
 # Services
 #
+module "keycloak" {
+  count              = local.enabled_services.keycloak ? 1 : 0
+  source             = "./modules/keycloak"
+}
+
 module "prometheus" {
   count              = local.enabled_services.prometheus ? 1 : 0
   source             = "./modules/prometheus"
@@ -41,7 +46,7 @@ module "ingress" {
   service_name = each.key
   service_port = each.value
 
-  depends_on = [module.grafana]
+  depends_on = [module.grafana, module.keycloak]
 
   providers = {
     civo = civo

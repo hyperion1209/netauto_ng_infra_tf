@@ -1,5 +1,11 @@
 # netauto_ng_infra_tf
 
+## Manual
+### Adding a new service
+1. Copy an existing service module and modify the **helm.tf** and the **values.tftpl** template files
+2. Add the new service to the **enabled_services** local variable and set it to **true**
+3. If the new service needs to be accessed from the internet, add an ingress by adding the new service to the **ingress_services** local variable and by adding the service module as a dependency of the **ingress** module.
+
 ## TODO
 ### Prometheus
 - monitor server pvc utilization and adjust size to keep 7 days worth of data

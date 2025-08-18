@@ -13,9 +13,11 @@ locals {
   enabled_services = {
     prometheus = true
     grafana    = true
+    keycloak = true
   }
   ingress_services = {
     grafana = 80
+    keycloak = 80
   }
 }
 
