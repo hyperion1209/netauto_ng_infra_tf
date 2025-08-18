@@ -7,7 +7,7 @@ resource "helm_release" "prometheus" {
   create_namespace = true
 
   values = [
-    templatefile("${path.module}/values.tpl", {
+    templatefile("${path.module}/values.tftpl", {
       storage_class_name = var.storage_class_name
     })
   ]

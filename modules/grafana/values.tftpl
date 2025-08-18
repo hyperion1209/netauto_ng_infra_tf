@@ -1,0 +1,44 @@
+# grafana-values.tpl
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: ${prometheus_url}
+        access: proxy
+        isDefault: true
+        basicAuth: false
+        editable: false
+persistence:
+  type: pvc
+  enabled: true
+  storageClassName: ${storage_class_name}
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    k3s_cluster_monitoring:
+      gnetId: 15282
+      revision: 1
+      datasource: Prometheus
+    %{ for dashboard in custom_dashboards ~}
+${indent(4, replace(replace(dashboard, ".json", ""), "./", ""))}:
+      json: |
+        ${indent(8, file("${module_path}/custom_dashboards/${dashboard}"))}
+    %{ endfor }
+
+# Optional: Enable admin password via variable
+adminPassword: ${admin_password}

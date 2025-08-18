@@ -12,10 +12,10 @@ locals {
   }
   enabled_services = {
     prometheus = true
-    grafana    = false
+    grafana    = true
   }
   ingress_services = {
-    # grafana = 80
+    grafana = 80
   }
 }
 
