@@ -16,16 +16,16 @@ resource "civo_dns_domain_name" "this" {
 # Services
 #
 module "prometheus" {
-  count  = local.enabled_services.prometheus ? 1 : 0
-  source = "./modules/prometheus"
+  count              = local.enabled_services.prometheus ? 1 : 0
+  source             = "./modules/prometheus"
   storage_class_name = local.k8s_cluster.storage_class_name
 }
 
 module "grafana" {
-  count  = local.enabled_services.grafana && local.enabled_services.prometheus ? 1 : 0
-  source = "./modules/grafana"
-  prometheus_ip = module.prometheus[0].service_attrs.ip
-  prometheus_port = module.prometheus[0].service_attrs.port
+  count              = local.enabled_services.grafana && local.enabled_services.prometheus ? 1 : 0
+  source             = "./modules/grafana"
+  prometheus_ip      = module.prometheus[0].service_attrs.ip
+  prometheus_port    = module.prometheus[0].service_attrs.port
   storage_class_name = local.k8s_cluster.storage_class_name
 }
 
@@ -41,7 +41,7 @@ module "ingress" {
   service_name = each.key
   service_port = each.value
 
-  depends_on = [ module.grafana ]
+  depends_on = [module.grafana]
 
   providers = {
     civo = civo

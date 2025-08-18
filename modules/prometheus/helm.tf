@@ -18,5 +18,5 @@ data "kubernetes_service_v1" "prometheus" {
     name      = "prometheus-server"
     namespace = "prometheus"
   }
-  depends_on = [ helm_release.prometheus ]
+  depends_on = [helm_release.prometheus]
 }

@@ -7,7 +7,7 @@ locals {
     prod = "netauto-ng.org"
   }
   k8s_cluster = {
-    name = "netauto-ng-dev-cluster"
+    name               = "netauto-ng-dev-cluster"
     storage_class_name = "civo-volume"
   }
   enabled_services = {
