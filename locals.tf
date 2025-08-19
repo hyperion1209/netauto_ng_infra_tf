@@ -11,9 +11,10 @@ locals {
     storage_class_name = "civo-volume"
   }
   enabled_services = {
+    keycloak = true
+    vault = true
     prometheus = true
     grafana    = true
-    keycloak = true
   }
   ingress_services = {
     grafana = 80

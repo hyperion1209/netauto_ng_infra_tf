@@ -20,6 +20,11 @@ module "keycloak" {
   source             = "./modules/keycloak"
 }
 
+module "vault" {
+  count              = local.enabled_services.vault ? 1 : 0
+  source             = "./modules/vault"
+}
+
 module "prometheus" {
   count              = local.enabled_services.prometheus ? 1 : 0
   source             = "./modules/prometheus"
