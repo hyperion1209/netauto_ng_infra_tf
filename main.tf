@@ -16,13 +16,13 @@ resource "civo_dns_domain_name" "this" {
 # Services
 #
 module "keycloak" {
-  count              = local.enabled_services.keycloak ? 1 : 0
-  source             = "./modules/keycloak"
+  count  = local.enabled_services.keycloak ? 1 : 0
+  source = "./modules/keycloak"
 }
 
 module "vault" {
-  count              = local.enabled_services.vault ? 1 : 0
-  source             = "./modules/vault"
+  count  = local.enabled_services.vault ? 1 : 0
+  source = "./modules/vault"
 }
 
 module "prometheus" {
@@ -43,12 +43,12 @@ module "grafana" {
 # Service Ingress
 #
 module "ingress" {
-  for_each     = local.ingress_services
-  source       = "./modules/ingress"
-  domain_id    = civo_dns_domain_name.this.id
-  domain_name  = civo_dns_domain_name.this.name
-  lb_public_ip = data.civo_loadbalancer.traefik.public_ip
-  service_name = each.key
+  for_each      = local.ingress_services
+  source        = "./modules/ingress"
+  domain_id     = civo_dns_domain_name.this.id
+  domain_name   = civo_dns_domain_name.this.name
+  lb_public_ip  = data.civo_loadbalancer.traefik.public_ip
+  service_name  = each.key
   service_attrs = each.value
 
   depends_on = [module.grafana, module.keycloak]

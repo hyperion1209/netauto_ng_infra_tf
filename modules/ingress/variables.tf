@@ -19,7 +19,7 @@ variable "service_attrs" {
   type = object({
     namespace = optional(string)
     backend = object({
-      port = number
+      port    = number
       service = optional(string)
     })
   })
