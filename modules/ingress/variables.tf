@@ -15,6 +15,12 @@ variable "service_name" {
   type = string
 }
 
-variable "service_port" {
-  type = number
+variable "service_attrs" {
+  type = object({
+    namespace = optional(string)
+    backend = object({
+      port = number
+      service = optional(string)
+    })
+  })
 }

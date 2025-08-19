@@ -9,7 +9,7 @@ resource "kubernetes_manifest" "service_ingress" {
         "kubernetes.io/ingress.class"    = "traefik"
       }
       "name"      = var.service_name
-      "namespace" = var.service_name
+      "namespace" = local.namespace
     }
     "spec" = {
       "rules" = [
@@ -20,9 +20,9 @@ resource "kubernetes_manifest" "service_ingress" {
               {
                 "backend" = {
                   "service" = {
-                    "name" = var.service_name
+                    "name" = local.backend_service
                     "port" = {
-                      "number" = var.service_port
+                      "number" = var.service_attrs.backend.port
                     }
                   }
                 }

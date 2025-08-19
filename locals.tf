@@ -17,8 +17,16 @@ locals {
     grafana    = true
   }
   ingress_services = {
-    grafana = 80
-    keycloak = 80
+    grafana = {
+      backend = {
+        port = 80
+      }
+    }
+    keycloak = {
+      backend = {
+        port = 80
+      }
+    }
   }
 }
 

@@ -49,7 +49,7 @@ module "ingress" {
   domain_name  = civo_dns_domain_name.this.name
   lb_public_ip = data.civo_loadbalancer.traefik.public_ip
   service_name = each.key
-  service_port = each.value
+  service_attrs = each.value
 
   depends_on = [module.grafana, module.keycloak]
 
