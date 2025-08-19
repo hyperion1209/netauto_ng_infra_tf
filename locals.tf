@@ -27,6 +27,12 @@ locals {
         port = 80
       }
     }
+    vault = {
+      backend = {
+        port = 8200
+        service = "vault-ui"
+      }
+    }
   }
 }
 

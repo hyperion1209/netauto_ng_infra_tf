@@ -51,7 +51,7 @@ module "ingress" {
   service_name  = each.key
   service_attrs = each.value
 
-  depends_on = [module.grafana, module.keycloak]
+  depends_on = [module.grafana, module.keycloak, module.vault]
 
   providers = {
     civo = civo
