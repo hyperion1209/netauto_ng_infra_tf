@@ -29,7 +29,7 @@ locals {
     }
     vault = {
       backend = {
-        port = 8200
+        port    = 8200
         service = "vault-ui"
       }
     }
