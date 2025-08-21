@@ -32,9 +32,10 @@ module "prometheus" {
 }
 
 module "grafana" {
-  count              = local.enabled_services.grafana && local.enabled_services.prometheus ? 1 : 0
+  count              = local.enabled_services.grafana && local.enabled_services.prometheus && local.enabled_services.keycloak ? 1 : 0
   source             = "./modules/grafana"
-  prometheus_attrs      = module.prometheus[0].service_attrs
+  prometheus_attrs   = module.prometheus[0].service_attrs
+  keycloak_attrs     = module.keycloak[0].service_attrs
   storage_class_name = local.k8s_cluster.storage_class_name
 }
 
