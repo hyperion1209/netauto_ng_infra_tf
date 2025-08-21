@@ -1,5 +1,5 @@
 locals {
-  prometheus_url = "http://${var.prometheus_ip}:${var.prometheus_port}"
+  prometheus_url = "http://${var.prometheus_attrs.ip}:${var.prometheus_attrs.port}"
 }
 
 resource "helm_release" "grafana" {
@@ -19,4 +19,12 @@ resource "helm_release" "grafana" {
       admin_password     = "admin"
     })
   ]
+}
+
+data "kubernetes_service_v1" "grafana" {
+  metadata {
+    name      = "grafana"
+    namespace = "grafana"
+  }
+  depends_on = [helm_release.grafana]
 }

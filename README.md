@@ -6,13 +6,21 @@
 2. Add the new service to the **enabled_services** local variable and set it to **true**
 3. If the new service needs to be accessed from the internet, add an ingress by adding the new service to the **ingress_services** local variable and by adding the service module as a dependency of the **ingress** module.
 
-## Services
-### Keycloak
+## Bootstrapping
+### Vault
+#### Initial login
 
+
+### Keycloak
+#### Initial login
+Default user is: user
 To get the default password after deploying the service run:
 ```
 kubectl -n keycloak get secret keycloak -o jsonpath='{.data.admin-password}' | base64 -d && echo
 ```
+
+#### Setting up credentials for terraform provider
+https://registry.terraform.io/providers/linz/keycloak/latest/docs
 
 ## TODO
 ### Prometheus

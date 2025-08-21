@@ -34,8 +34,7 @@ module "prometheus" {
 module "grafana" {
   count              = local.enabled_services.grafana && local.enabled_services.prometheus ? 1 : 0
   source             = "./modules/grafana"
-  prometheus_ip      = module.prometheus[0].service_attrs.ip
-  prometheus_port    = module.prometheus[0].service_attrs.port
+  prometheus_attrs      = module.prometheus[0].service_attrs
   storage_class_name = local.k8s_cluster.storage_class_name
 }
 
@@ -51,7 +50,11 @@ module "ingress" {
   service_name  = each.key
   service_attrs = each.value
 
-  depends_on = [module.grafana, module.keycloak, module.vault]
+  depends_on = [
+    module.grafana,
+    module.keycloak,
+    # module.vault
+  ]
 
   providers = {
     civo = civo

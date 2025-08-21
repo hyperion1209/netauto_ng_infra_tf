@@ -1,6 +1,6 @@
 resource "helm_release" "keycloak" {
   name             = "keycloak"
-  repository       = "https://charts.bitnami.com/bitnami"
+  repository       = "oci://registry-1.docker.io/bitnamicharts"
   chart            = "keycloak"
   version          = "25.1.0"
   namespace        = "keycloak"
@@ -10,4 +10,13 @@ resource "helm_release" "keycloak" {
     templatefile("${path.module}/values.tftpl", {
     })
   ]
+  timeout = 600
+}
+
+data "kubernetes_service_v1" "keycloak" {
+  metadata {
+    name      = "keycloak"
+    namespace = "keycloak"
+  }
+  depends_on = [helm_release.keycloak]
 }

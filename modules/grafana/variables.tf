@@ -1,9 +1,8 @@
-variable "prometheus_ip" {
-  type = string
-}
-
-variable "prometheus_port" {
-  type = number
+variable "prometheus_attrs" {
+  type = object({
+    ip = string
+    port = number
+  })
 }
 
 variable "storage_class_name" {

@@ -12,7 +12,7 @@ locals {
   }
   enabled_services = {
     keycloak   = true
-    vault      = true
+    vault      = false
     prometheus = true
     grafana    = true
   }
@@ -27,12 +27,12 @@ locals {
         port = 80
       }
     }
-    vault = {
-      backend = {
-        port    = 8200
-        service = "vault-ui"
-      }
-    }
+    # vault = {
+    #   backend = {
+    #     port    = 8200
+    #     service = "vault-ui"
+    #   }
+    # }
   }
 }
 
