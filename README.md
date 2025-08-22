@@ -23,8 +23,14 @@ kubectl -n keycloak get secret keycloak -o jsonpath='{.data.admin-password}' | b
 https://registry.terraform.io/providers/linz/keycloak/latest/docs
 
 ## TODO
+### General
+- [ ] Get proper certificates
 ### Prometheus
-- monitor server pvc utilization and adjust size to keep 7 days worth of data
+- [ ] monitor server pvc utilization and adjust size to keep 7 days worth of data
+### Keycloak
+- [x] Add client dedicated scope mapper to TF code and remove the manual one
+- [ ] Grafana doesn't use http to access keycloak
+- [ ] Find a way to authenticate apps without the need for client secret in app config
 
 ## Known Issues
 ### Grafana

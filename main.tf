@@ -34,8 +34,9 @@ module "prometheus" {
 module "grafana" {
   count              = local.enabled_services.grafana && local.enabled_services.prometheus && local.enabled_services.keycloak ? 1 : 0
   source             = "./modules/grafana"
+  domain_name        = civo_dns_domain_name.this.name
   prometheus_attrs   = module.prometheus[0].service_attrs
-  keycloak_attrs     = module.keycloak[0].service_attrs
+  keycloak_creds     = var.grafana_keycloak_creds
   storage_class_name = local.k8s_cluster.storage_class_name
 }
 

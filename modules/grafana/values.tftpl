@@ -15,6 +15,13 @@ persistence:
   enabled: true
   storageClassName: ${storage_class_name}
 
+extraSecretMounts:
+  - name: keycloak-oauth-secret-mount
+    secretName: ${keycloak_secret_name}
+    defaultMode: 0440
+    mountPath: /etc/secrets/keycloak_oauth
+    readOnly: true
+
 dashboardProviders:
   dashboardproviders.yaml:
     apiVersion: 1
@@ -40,5 +47,25 @@ ${indent(4, replace(replace(dashboard, ".json", ""), "./", ""))}:
         ${indent(8, file("${module_path}/custom_dashboards/${dashboard}"))}
     %{ endfor }
 
-# Optional: Enable admin password via variable
-adminPassword: ${admin_password}
+grafana.ini:
+  security:
+    disable_initial_admin_creation: true
+  server:
+    root_url: ${grafana_url}
+  auth.generic_oauth:
+    enabled: true
+    name: Keycloak-OAuth
+    allow_sign_up: true
+    client_id: grafana-oauth
+    client_secret: "$__file{/etc/secrets/keycloak_oauth/client_secret}"
+    scopes: openid email profile offline_access roles
+    auth_url: ${keycloak_url}/realms/netauto-ng/protocol/openid-connect/auth
+    token_url: ${keycloak_url}/realms/netauto-ng/protocol/openid-connect/token
+    api_url: ${keycloak_url}/realms/netauto-ng/protocol/openid-connect/userinfo
+    signout_redirect_url: ${keycloak_url}/realms/netauto-ng/protocol/openid-connect/logout
+    role_attribute_strict: true
+    role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
+    allow_assign_grafana_admin: true
+    email_attribute_path: email
+    name_attribute_path: preferred_username
+    login_attribute_path: preferred_username
