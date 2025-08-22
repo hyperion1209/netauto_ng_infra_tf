@@ -1,13 +1,16 @@
 resource "helm_release" "keycloak" {
   name             = "keycloak"
-  repository       = "oci://registry-1.docker.io/bitnamicharts"
-  chart            = "keycloak"
-  version          = "25.1.0"
+  repository       = "oci://ghcr.io/codecentric/helm-charts/"
+  chart            = "keycloakx"
+  version          = "7.1.3"
   namespace        = "keycloak"
   create_namespace = true
 
   values = [
     templatefile("${path.module}/values.tftpl", {
+      hostname       = local.hostname
+      cluster_issuer = local.cluster_issuer
+      secret_name    = local.service_name
     })
   ]
   timeout = 600
@@ -15,7 +18,7 @@ resource "helm_release" "keycloak" {
 
 data "kubernetes_service_v1" "keycloak" {
   metadata {
-    name      = "keycloak"
+    name      = "keycloak-keycloakx-http"
     namespace = "keycloak"
   }
   depends_on = [helm_release.keycloak]

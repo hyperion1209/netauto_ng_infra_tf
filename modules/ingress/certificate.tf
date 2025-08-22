@@ -1,4 +1,5 @@
 resource "kubernetes_manifest" "service_cert" {
+  count = var.service_attrs.native_ingress ? 0 : 1
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
     "kind"       = "Certificate"
@@ -13,7 +14,7 @@ resource "kubernetes_manifest" "service_cert" {
       ]
       "issuerRef" = {
         "kind" = "ClusterIssuer"
-        "name" = "letsencrypt-{terraform.workspace}"
+        "name" = "letsencrypt-${terraform.workspace}"
       }
       "secretName" = var.service_name
     }

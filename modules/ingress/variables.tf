@@ -4,7 +4,6 @@ variable "domain_id" {
 
 variable "domain_name" {
   type = string
-
 }
 
 variable "lb_public_ip" {
@@ -22,5 +21,6 @@ variable "service_attrs" {
       port    = number
       service = optional(string)
     })
+    native_ingress = optional(bool, false)
   })
 }

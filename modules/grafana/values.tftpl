@@ -61,10 +61,10 @@ grafana.ini:
     client_id: grafana-oauth
     client_secret: "$__file{/etc/secrets/keycloak_oauth/client_secret}"
     scopes: openid email profile offline_access roles
-    auth_url: ${keycloak_url}/realms/netauto-ng/protocol/openid-connect/auth
-    token_url: ${keycloak_url}/realms/netauto-ng/protocol/openid-connect/token
-    api_url: ${keycloak_url}/realms/netauto-ng/protocol/openid-connect/userinfo
-    signout_redirect_url: ${keycloak_url}/realms/netauto-ng/protocol/openid-connect/logout
+    auth_url: ${keycloak_url}/auth/realms/netauto-ng/protocol/openid-connect/auth
+    token_url: ${keycloak_url}/auth/realms/netauto-ng/protocol/openid-connect/token
+    api_url: ${keycloak_url}/auth/realms/netauto-ng/protocol/openid-connect/userinfo
+    signout_redirect_url: ${keycloak_url}/auth/realms/netauto-ng/protocol/openid-connect/logout
     role_attribute_strict: true
     role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
     allow_assign_grafana_admin: true

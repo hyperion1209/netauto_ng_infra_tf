@@ -16,8 +16,9 @@ resource "civo_dns_domain_name" "this" {
 # Services
 #
 module "keycloak" {
-  count  = local.enabled_services.keycloak ? 1 : 0
-  source = "./modules/keycloak"
+  count       = local.enabled_services.keycloak ? 1 : 0
+  source      = "./modules/keycloak"
+  domain_name = civo_dns_domain_name.this.name
 }
 
 module "vault" {
@@ -53,8 +54,8 @@ module "ingress" {
   service_attrs = each.value
 
   depends_on = [
-    module.grafana,
     module.keycloak,
+    module.grafana,
     # module.vault
   ]
 

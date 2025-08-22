@@ -1,4 +1,5 @@
 resource "kubernetes_manifest" "service_ingress" {
+  count      = var.service_attrs.native_ingress ? 0 : 1
   depends_on = [kubernetes_manifest.service_cert, civo_dns_domain_record.this]
   manifest = {
     "apiVersion" = "networking.k8s.io/v1"

@@ -1,13 +1,17 @@
-locals {
-  prometheus_url = "http://${var.prometheus_attrs.ip}:${var.prometheus_attrs.port}"
-  keycloak_url   = "http://keycloak.${var.domain_name}"
-  grafana_url    = "https://grafana.${var.domain_name}"
-}
+resource "kubernetes_namespace_v1" "grafana" {
+  metadata {
+    name = local.service_name
+    labels = {
+      "kubernetes.io/metadata.name" = local.service_name
+      name                          = local.service_name
+    }
+  }
 
+}
 resource "kubernetes_secret_v1" "keycloak_secret" {
   metadata {
     name      = "keycloak-oauth-secret"
-    namespace = "grafana"
+    namespace = kubernetes_namespace_v1.grafana.metadata[0].name
   }
   data = {
     "client_secret" = var.keycloak_creds
@@ -19,8 +23,8 @@ resource "helm_release" "grafana" {
   repository       = "https://grafana.github.io/helm-charts"
   chart            = "grafana"
   version          = "9.3.1"
-  namespace        = "grafana"
-  create_namespace = true
+  namespace        = kubernetes_namespace_v1.grafana.metadata[0].name
+  create_namespace = false
 
   values = [
     templatefile("${path.module}/values.tftpl", {
