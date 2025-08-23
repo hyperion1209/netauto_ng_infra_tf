@@ -41,6 +41,14 @@ module "grafana" {
   storage_class_name = local.k8s_cluster.storage_class_name
 }
 
+module "kube_prometheus_stack" {
+  count              = local.enabled_services.kube_prometheus_stack ? 1 : 0
+  source             = "./modules/kube_prometheus_stack"
+  domain_name        = civo_dns_domain_name.this.name
+  keycloak_creds     = var.grafana_keycloak_creds
+  storage_class_name = local.k8s_cluster.storage_class_name
+}
+
 #
 # Service Ingress
 #
@@ -55,7 +63,7 @@ module "ingress" {
 
   depends_on = [
     module.keycloak,
-    module.grafana,
+    # module.grafana,
     # module.vault
   ]
 

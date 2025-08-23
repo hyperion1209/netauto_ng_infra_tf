@@ -6,8 +6,8 @@ resource "kubernetes_namespace_v1" "grafana" {
       name                          = local.service_name
     }
   }
-
 }
+
 resource "kubernetes_secret_v1" "keycloak_secret" {
   metadata {
     name      = "keycloak-oauth-secret"

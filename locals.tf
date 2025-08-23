@@ -13,8 +13,9 @@ locals {
   enabled_services = {
     keycloak   = true
     vault      = false
-    prometheus = true
-    grafana    = true
+    prometheus = false
+    grafana    = false
+    kube_prometheus_stack = true
   }
   ingress_services = {
     keycloak = {
@@ -24,11 +25,11 @@ locals {
       }
       native_ingress = false
     }
-    grafana = {
-      backend = {
-        port = 80
-      }
-    }
+    # grafana = {
+    #   backend = {
+    #     port = 80
+    #   }
+    # }
     # vault = {
     #   backend = {
     #     port    = 8200
