@@ -37,10 +37,16 @@ dashboardProviders:
 
 dashboards:
   default:
+    # Imported dashboards
     k3s_cluster_monitoring:
       gnetId: 15282
       revision: 1
       datasource: Prometheus
+    keycloak:
+      gnetId: 10441
+      revision: 2
+      datasource: Prometheus
+    # Custom dashboards
     %{ for dashboard in custom_dashboards ~}
 ${indent(4, replace(replace(dashboard, ".json", ""), "./", ""))}:
       json: |
