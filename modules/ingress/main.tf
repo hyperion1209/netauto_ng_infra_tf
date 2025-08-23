@@ -1,47 +1,45 @@
-resource "kubernetes_manifest" "service_ingress" {
-  count      = var.service_attrs.native_ingress ? 0 : 1
+resource "kubernetes_ingress_v1" "service_ingress" {
   depends_on = [kubernetes_manifest.service_cert, civo_dns_domain_record.this]
-  manifest = {
-    "apiVersion" = "networking.k8s.io/v1"
-    "kind"       = "Ingress"
-    "metadata" = {
-      "annotations" = {
-        "cert-manager.io/cluster-issuer" = "letsencrypt-${terraform.workspace}"
-        "kubernetes.io/ingress.class"    = "traefik"
-      }
-      "name"      = var.service_name
-      "namespace" = local.namespace
+  metadata {
+    name      = var.namespace
+    namespace = var.namespace
+    annotations = {
+      "cert-manager.io/cluster-issuer" = "letsencrypt-${terraform.workspace}"
+      "kubernetes.io/ingress.class"    = "traefik"
     }
-    "spec" = {
-      "rules" = [
-        {
-          "host" = "${var.service_name}.${var.domain_name}"
-          "http" = {
-            "paths" = [
-              {
-                "backend" = {
-                  "service" = {
-                    "name" = local.backend_service
-                    "port" = {
-                      "number" = var.service_attrs.backend.port
-                    }
-                  }
+
+  }
+  spec {
+    dynamic "rule" {
+      for_each = var.namespace_apps
+      content {
+        host = "${rule.key}.${var.domain_name}"
+        http {
+          path {
+            path      = "/"
+            path_type = "Prefix"
+            backend {
+              service {
+                name = rule.value.service_name
+                port {
+                  number = rule.value.port
                 }
-                "path"     = "/"
-                "pathType" = "Prefix"
-              },
-            ]
+              }
+            }
           }
-        },
-      ]
-      "tls" = [
-        {
-          "hosts" = [
-            "${var.service_name}.${var.domain_name}"
-          ]
-          "secretName" = var.service_name
-        },
-      ]
+        }
+      }
+    }
+    dynamic "tls" {
+      for_each = var.namespace_apps
+      content {
+        hosts = [
+          "${tls.key}.${var.domain_name}"
+        ]
+        secret_name = tls.key
+      }
+
     }
   }
+
 }

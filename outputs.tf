@@ -5,7 +5,3 @@ output "service_attrs" {
     keycloak   = module.keycloak[*].service_attrs
   }
 }
-
-output "service_urls" {
-  value = module.ingress[*]
-}

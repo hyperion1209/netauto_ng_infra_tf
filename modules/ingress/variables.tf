@@ -10,17 +10,15 @@ variable "lb_public_ip" {
   type = string
 }
 
-variable "service_name" {
+variable "namespace" {
   type = string
 }
 
-variable "service_attrs" {
-  type = object({
-    namespace = optional(string)
-    backend = object({
-      port    = number
-      service = optional(string)
+variable "namespace_apps" {
+  type = map(
+    object({
+      port         = number
+      service_name = optional(string)
     })
-    native_ingress = optional(bool, false)
-  })
+  )
 }

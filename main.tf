@@ -42,7 +42,7 @@ module "grafana" {
 }
 
 module "kube_prometheus_stack" {
-  count              = local.enabled_services.kube_prometheus_stack ? 1 : 0
+  count              = local.enabled_services.kube-prometheus-stack ? 1 : 0
   source             = "./modules/kube_prometheus_stack"
   domain_name        = civo_dns_domain_name.this.name
   keycloak_creds     = var.grafana_keycloak_creds
@@ -53,13 +53,13 @@ module "kube_prometheus_stack" {
 # Service Ingress
 #
 module "ingress" {
-  for_each      = local.ingress_services
-  source        = "./modules/ingress"
-  domain_id     = civo_dns_domain_name.this.id
-  domain_name   = civo_dns_domain_name.this.name
-  lb_public_ip  = data.civo_loadbalancer.traefik.public_ip
-  service_name  = each.key
-  service_attrs = each.value
+  for_each       = local.ingress_services
+  source         = "./modules/ingress"
+  domain_id      = civo_dns_domain_name.this.id
+  domain_name    = civo_dns_domain_name.this.name
+  lb_public_ip   = data.civo_loadbalancer.traefik.public_ip
+  namespace      = each.key
+  namespace_apps = each.value
 
   depends_on = [
     module.keycloak,

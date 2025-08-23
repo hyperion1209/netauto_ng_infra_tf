@@ -11,29 +11,35 @@ locals {
     storage_class_name = "civo-volume"
   }
   enabled_services = {
-    keycloak   = true
-    vault      = false
-    prometheus = false
-    grafana    = false
-    kube_prometheus_stack = true
+    keycloak              = true
+    vault                 = false
+    prometheus            = false
+    grafana               = false
+    kube-prometheus-stack = true
   }
   ingress_services = {
     keycloak = {
-      backend = {
-        port    = 80
-        service = "keycloak-keycloakx-http"
+      keycloak = {
+        port         = 80
+        service_name = "keycloak-keycloakx-http"
       }
-      native_ingress = false
+    }
+    kube-prometheus-stack = {
+      grafana = {
+        port         = 80
+        service_name = "kube-prometheus-stack-grafana"
+      }
     }
     # grafana = {
-    #   backend = {
+    #   grafana = {
     #     port = 80
+    #     service_name = "grafana"
     #   }
     # }
     # vault = {
-    #   backend = {
+    #   vault = {
     #     port    = 8200
-    #     service = "vault-ui"
+    #     service_name = "vault-ui"
     #   }
     # }
   }

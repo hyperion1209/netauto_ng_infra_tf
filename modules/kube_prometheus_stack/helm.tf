@@ -31,7 +31,7 @@ resource "helm_release" "kube_prometheus_stack" {
       grafana_url          = local.grafana_url
       keycloak_url         = local.keycloak_url
       keycloak_secret_name = kubernetes_secret_v1.keycloak_secret.metadata[0].name
-      storage_class_name = var.storage_class_name
+      storage_class_name   = var.storage_class_name
     })
   ]
 }
