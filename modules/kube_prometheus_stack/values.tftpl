@@ -22,6 +22,7 @@
 #            requests:
 #              storage: 10Gi
 grafana:
+  defaultDashboardsEnabled: false
   extraSecretMounts:
     - name: keycloak-oauth-secret-mount
       secretName: ${keycloak_secret_name}
