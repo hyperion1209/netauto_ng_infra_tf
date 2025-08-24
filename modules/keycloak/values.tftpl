@@ -15,6 +15,6 @@ extraEnv: |
     value: >-
       -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
 
-# serviceMonitor:
-#   enabled: true
-#   namespace: keycloak
+serviceMonitor:
+  enabled: true
+  namespace: keycloak
