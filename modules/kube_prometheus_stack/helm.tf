@@ -1,9 +1,9 @@
 resource "kubernetes_namespace_v1" "kube_prometheus_stack" {
   metadata {
-    name = local.service_name
+    name = local.namespace
     labels = {
-      "kubernetes.io/metadata.name" = local.service_name
-      name                          = local.service_name
+      "kubernetes.io/metadata.name" = local.namespace
+      name                          = local.namespace
     }
   }
 }

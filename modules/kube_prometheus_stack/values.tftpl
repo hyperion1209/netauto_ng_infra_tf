@@ -55,3 +55,16 @@ grafana:
       disable_initial_admin_creation: true
     server:
       root_url: ${grafana_url}
+    sidecar:
+      dashboards:
+        enabled: true
+        label: grafana_dashboard
+        folder: /var/lib/grafana/dashboards
+        updateIntervalSeconds: 10
+        folderAnnotation: grafana_folder
+        provider:
+          allowUiUpdates: true
+          foldersFromFilesStructure: true
+      alerts:
+        enabled: true
+        label: grafana_alert
