@@ -1,26 +1,26 @@
 # kube-prometheus-stack-prometheus-values.tftpl
-# alertmanager:
-#   alertmanagerSpec:
-#     storage:
-#       volumeClaimTemplate:
-#         spec:
-#           storageClassName: ${storage_class_name}
-#           accessModes:
-#             - ReadWriteOnce
-#           resources:
-#             requests:
-#               storage: 5Gi
-# prometheus:
-#   prometheusSpec:
-#     storageSpec:
-#      volumeClaimTemplate:
-#        spec:
-#          storageClassName: ${storage_class_name}
-#          accessModes:
-#            - ReadWriteOnce
-#          resources:
-#            requests:
-#              storage: 10Gi
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: ${storage_class_name}
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+prometheus:
+  prometheusSpec:
+    storageSpec:
+     volumeClaimTemplate:
+       spec:
+         storageClassName: ${storage_class_name}
+         accessModes:
+           - ReadWriteOnce
+         resources:
+           requests:
+             storage: 10Gi
 grafana:
   defaultDashboardsEnabled: false
   extraSecretMounts:

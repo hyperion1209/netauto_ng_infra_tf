@@ -28,8 +28,8 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 - [ ] Get proper certificates
 
 ### Prometheus
+- [x] add persistent volumes (alertmanager too)
 - [ ] monitor server pvc utilization and adjust size to keep 7 days worth of data
-- [ ] add persistent volumes (alertmanager too)
 - [ ] Add keycloak auth and ingress
 ### Keycloak
 - [x] Add client dedicated scope mapper to TF code and remove the manual one
