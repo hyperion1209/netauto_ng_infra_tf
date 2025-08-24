@@ -25,14 +25,19 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 ## TODO
 ### General
 - [ ] Get proper certificates
-- [ ] Use native service ingress config in the helm charts
+- [x] Use native service ingress config in the helm charts - easier to use the ingress module
 
 ### Prometheus
 - [ ] monitor server pvc utilization and adjust size to keep 7 days worth of data
+- [ ] add persistent volumes (alertmanager too)
+- [ ] Add keycloak auth and ingress
 ### Keycloak
 - [x] Add client dedicated scope mapper to TF code and remove the manual one
 - [x] Grafana doesn't use http to access keycloak
 - [ ] Find a way to authenticate apps without the need for client secret in app config
+### Grafana
+- [ ] Add dashboard and service monitor for keycloak
+- [ ] add persistent volumes
 
 ## Known Issues
 ### Grafana

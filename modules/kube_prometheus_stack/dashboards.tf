@@ -1,7 +1,7 @@
 resource "kubernetes_config_map_v1" "dashboard" {
   for_each = local.dashboards
   metadata {
-    name = each.key
+    name      = each.key
     namespace = local.namespace
     labels = {
       grafana_dashboard = "1"
