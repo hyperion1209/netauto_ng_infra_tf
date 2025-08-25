@@ -21,3 +21,10 @@ serviceMonitor:
   labels:
     release: kube-prometheus-stack
   path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/metrics'
+
+ # extraServiceMonitor:
+ #   enabled: true
+ #   namespace: keycloak
+ #   labels:
+ #     release: kube-prometheus-stack
+ #   path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/realms/master/metrics'

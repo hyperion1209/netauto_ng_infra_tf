@@ -31,14 +31,19 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 - [x] add persistent volumes (alertmanager too)
 - [ ] monitor server pvc utilization and adjust size to keep 7 days worth of data
 - [ ] Add oauth sidecar container with keycloak auth and ingress
+
 ### Keycloak
 - [x] Add client dedicated scope mapper to TF code and remove the manual one
 - [x] Grafana doesn't use http to access keycloak
 - [ ] Find a way to authenticate apps without the need for client secret in app config
+- [x] Add dashboard and service monitor for keycloak
+- [ ] Create and use custom docker image with keycloak-metrics-spi installed
+    - repo: https://github.com/aerogear/keycloak-metrics-spi?tab=readme-ov-file
+    - extending keycloak image: https://www.keycloak.org/server/containers
+
 ### Grafana
 - [x] add persistent volumes
-- [ ] Add dashboard and service monitor for keycloak
 
 ## Known Issues
 ### Grafana
-- Dashboards provisioned with Helm cannot be deleted: https://github.com/grafana/helm-charts/issues/2752
+- ~~Dashboards provisioned with Helm cannot be deleted: https://github.com/grafana/helm-charts/issues/2752~~
