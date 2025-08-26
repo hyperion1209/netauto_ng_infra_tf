@@ -21,6 +21,13 @@ kubectl exec -it vault-0 -n vault -- vault operator unseal
 #### Allow TF access
 https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration#configure-vault
 
+#### Logging into the CLI
+```
+export VAULT_ADDR="https://your-vault-server:8200"
+
+vault login <root_token>
+vault login -method=userpass username=my-username password=my-password
+```
 
 ### Keycloak
 #### Initial login

@@ -1,8 +1,26 @@
 # vault-values.tftpl
+global:
+  serverTelemetry:
+    prometheusOperator: true
+
 server:
   dataStorage:
     enabled: true
     size: 10Gi
     storageClass: ${storage_class_name}
+  standalone:
+    config: |-
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+        # Enable unauthenticated metrics access (necessary for Prometheus Operator)
+        telemetry {
+         unauthenticated_metrics_access = "true"
+         prometheus_retention_time = "12h"
+         disable_hostname = true
+        }
+      }
+
 ui:
   enabled: true

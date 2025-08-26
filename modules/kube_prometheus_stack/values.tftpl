@@ -10,8 +10,34 @@ alertmanager:
           resources:
             requests:
               storage: 5Gi
+
 prometheus:
   prometheusSpec:
+    configMaps:
+      - vault-agent-config
+    containers:
+      - name: vault-agent-auth
+        image: hashicorp/vault:1.20
+        securityContext:
+          capabilities:
+            add:
+            - SETFCAP
+        volumeMounts:
+          - name: configmap-vault-agent-config
+            mountPath: /etc/vault
+          - name: config-out
+            mountPath: /home/vault/config-out
+        env:
+          - name: VAULT_ADDR
+            value: https://vault-svc.vault.svc:8200
+          - name: SKIP_SETCAP
+            value: "true"
+        args:
+          [
+            "agent",
+            "-config=/etc/vault/vault-agent-config.hcl",
+            "-log-level=debug",
+          ]
     storageSpec:
      volumeClaimTemplate:
        spec:
