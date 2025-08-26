@@ -8,7 +8,18 @@
 
 ## Bootstrapping
 ### Vault
-#### Initial login
+The vault pod will fail readiness probes until it is initialized,
+```
+kubectl exec -it vault-0 -n vault -- vault operator init
+```
+and unsealed by running the following command 3 times:
+
+```
+kubectl exec -it vault-0 -n vault -- vault operator unseal
+```
+
+#### Allow TF access
+https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration#configure-vault
 
 
 ### Keycloak
@@ -29,8 +40,8 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 
 ### Prometheus
 - [x] add persistent volumes (alertmanager too)
-- [ ] monitor server pvc utilization and adjust size to keep 7 days worth of data
 - [ ] Add oauth sidecar container with keycloak auth and ingress
+- [ ] monitor server pvc utilization and adjust size to keep 7 days worth of data
 
 ### Keycloak
 - [x] Add client dedicated scope mapper to TF code and remove the manual one
@@ -40,6 +51,10 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 - [ ] Create and use custom docker image with keycloak-metrics-spi installed
     - repo: https://github.com/aerogear/keycloak-metrics-spi?tab=readme-ov-file
     - extending keycloak image: https://www.keycloak.org/server/containers
+
+### Oauth
+- [ ] Investigate using oauth2-proxy for all services
+    - docs: https://oauth2-proxy.github.io/oauth2-proxy/
 
 ### Grafana
 - [x] add persistent volumes

@@ -12,7 +12,7 @@ locals {
   }
   enabled_services = {
     keycloak              = true
-    vault                 = false
+    vault                 = true
     prometheus            = false
     grafana               = false
     kube-prometheus-stack = true
@@ -30,18 +30,12 @@ locals {
         service_name = "kube-prometheus-stack-grafana"
       }
     }
-    # grafana = {
-    #   grafana = {
-    #     port = 80
-    #     service_name = "grafana"
-    #   }
-    # }
-    # vault = {
-    #   vault = {
-    #     port    = 8200
-    #     service_name = "vault-ui"
-    #   }
-    # }
+    vault = {
+      vault = {
+        port    = 8200
+        service_name = "vault"
+      }
+    }
   }
 }
 

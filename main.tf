@@ -22,8 +22,9 @@ module "keycloak" {
 }
 
 module "vault" {
-  count  = local.enabled_services.vault ? 1 : 0
-  source = "./modules/vault"
+  count              = local.enabled_services.vault ? 1 : 0
+  source             = "./modules/vault"
+  storage_class_name = local.k8s_cluster.storage_class_name
 }
 
 module "prometheus" {
@@ -63,8 +64,8 @@ module "ingress" {
 
   depends_on = [
     module.keycloak,
-    # module.grafana,
-    # module.vault
+    module.kube_prometheus_stack,
+    module.vault
   ]
 
   providers = {

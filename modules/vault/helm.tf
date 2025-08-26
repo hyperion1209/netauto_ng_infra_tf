@@ -8,6 +8,7 @@ resource "helm_release" "vault" {
 
   values = [
     templatefile("${path.module}/values.tftpl", {
+      storage_class_name = var.storage_class_name
     })
   ]
 }
