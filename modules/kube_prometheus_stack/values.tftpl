@@ -15,13 +15,11 @@ prometheus:
   prometheusSpec:
     configMaps:
       - vault-agent-config
-    containers:
+    initContainers:
       - name: vault-agent-auth
         image: hashicorp/vault:1.20
         securityContext:
-          capabilities:
-            add:
-            - SETFCAP
+          runAsUser: 100
         volumeMounts:
           - name: configmap-vault-agent-config
             mountPath: /etc/vault
@@ -29,7 +27,7 @@ prometheus:
             mountPath: /home/vault/config-out
         env:
           - name: VAULT_ADDR
-            value: https://vault-svc.vault.svc:8200
+            value: https://vault.netauto-ng-dev.org
           - name: SKIP_SETCAP
             value: "true"
         args:

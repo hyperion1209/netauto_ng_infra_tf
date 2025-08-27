@@ -1,3 +1,5 @@
+exit_after_auth = true
+
 pid_file = "/home/vault/pidfile"
 
 auto_auth {
