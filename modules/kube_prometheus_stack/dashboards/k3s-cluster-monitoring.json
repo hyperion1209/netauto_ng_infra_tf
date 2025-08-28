@@ -408,7 +408,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_memory_MemTotal_bytes{})",
+          "expr": "sum(node_memory_MemTotal_bytes{}) - sum(node_memory_MemAvailable_bytes{})",
           "format": "table",
           "interval": "10s",
           "intervalFactor": 1,
