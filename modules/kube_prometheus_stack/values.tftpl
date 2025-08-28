@@ -62,7 +62,7 @@ grafana:
       enabled: true
       name: Keycloak-OAuth
       allow_sign_up: true
-      client_id: grafana-oauth
+      client_id: "$__file{/etc/secrets/keycloak_oauth/client_id}"
       client_secret: "$__file{/etc/secrets/keycloak_oauth/client_secret}"
       scopes: openid email profile offline_access roles
       auth_url: ${keycloak_url}/auth/realms/netauto-ng/protocol/openid-connect/auth

@@ -3,8 +3,3 @@ variable "CIVO_TOKEN" {
   sensitive = true
   default   = ""
 }
-
-variable "grafana_keycloak_creds" {
-  type      = string
-  sensitive = true
-}

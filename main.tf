@@ -27,27 +27,19 @@ module "vault" {
   storage_class_name = local.k8s_cluster.storage_class_name
 }
 
-module "prometheus" {
-  count              = local.enabled_services.prometheus ? 1 : 0
-  source             = "./modules/prometheus"
-  storage_class_name = local.k8s_cluster.storage_class_name
-}
-
-module "grafana" {
-  count              = local.enabled_services.grafana && local.enabled_services.prometheus && local.enabled_services.keycloak ? 1 : 0
-  source             = "./modules/grafana"
-  domain_name        = civo_dns_domain_name.this.name
-  prometheus_attrs   = module.prometheus[0].service_attrs
-  keycloak_creds     = var.grafana_keycloak_creds
-  storage_class_name = local.k8s_cluster.storage_class_name
+module "vault_secrets_operator" {
+  count   = local.enabled_services.vault-secrets-operator && local.enabled_services.vault ? 1 : 0
+  source  = "./modules/vault_secrets_operator"
+  clients = local.keycloak_client_services
 }
 
 module "kube_prometheus_stack" {
   count              = local.enabled_services.kube-prometheus-stack ? 1 : 0
   source             = "./modules/kube_prometheus_stack"
   domain_name        = civo_dns_domain_name.this.name
-  keycloak_creds     = var.grafana_keycloak_creds
   storage_class_name = local.k8s_cluster.storage_class_name
+
+  depends_on = [module.vault_secrets_operator]
 }
 
 #

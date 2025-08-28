@@ -1,23 +1,3 @@
-resource "kubernetes_namespace_v1" "kube_prometheus_stack" {
-  metadata {
-    name = local.namespace
-    labels = {
-      "kubernetes.io/metadata.name" = local.namespace
-      name                          = local.namespace
-    }
-  }
-}
-
-resource "kubernetes_secret_v1" "keycloak_secret" {
-  metadata {
-    name      = "keycloak-oauth-secret"
-    namespace = kubernetes_namespace_v1.kube_prometheus_stack.metadata[0].name
-  }
-  data = {
-    "client_secret" = var.keycloak_creds
-  }
-}
-
 resource "helm_release" "kube_prometheus_stack" {
   name             = "kube-prometheus-stack"
   repository       = "https://prometheus-community.github.io/helm-charts"
@@ -30,7 +10,7 @@ resource "helm_release" "kube_prometheus_stack" {
     templatefile("${path.module}/values.tftpl", {
       grafana_url          = local.grafana_url
       keycloak_url         = local.keycloak_url
-      keycloak_secret_name = kubernetes_secret_v1.keycloak_secret.metadata[0].name
+      keycloak_secret_name = "keycloak-oauth-creds"
       storage_class_name   = var.storage_class_name
     })
   ]

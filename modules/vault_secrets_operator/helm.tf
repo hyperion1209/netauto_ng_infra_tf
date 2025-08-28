@@ -8,7 +8,6 @@ resource "helm_release" "vso" {
 
   values = [
     templatefile("${path.module}/values.tftpl", {
-      storage_class_name = var.storage_class_name
     })
   ]
 }

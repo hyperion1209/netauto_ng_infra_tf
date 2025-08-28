@@ -1,6 +1,7 @@
+# The vault agent retrieves the necessary token for prometheus to scrape the metrics from vault
 resource "kubernetes_config_map_v1" "vault_agent_config" {
   metadata {
-    name = "vault-agent-config"
+    name      = "vault-agent-config"
     namespace = local.namespace
   }
 
@@ -12,9 +13,9 @@ resource "kubernetes_config_map_v1" "vault_agent_config" {
 resource "kubernetes_manifest" "servicemonitor_vault" {
   manifest = {
     "apiVersion" = "monitoring.coreos.com/v1"
-    "kind" = "ServiceMonitor"
+    "kind"       = "ServiceMonitor"
     "metadata" = {
-      "name" = "vault"
+      "name"      = "vault"
       "namespace" = "kube-prometheus-stack"
       "labels" = {
         "release" = "kube-prometheus-stack"
@@ -24,18 +25,18 @@ resource "kubernetes_manifest" "servicemonitor_vault" {
       "endpoints" = [
         {
           "bearerTokenFile" = "/etc/prometheus/config_out/.vault-token"
-          "interval" = "30s"
+          "interval"        = "30s"
           "params" = {
             "format" = [
               "prometheus",
             ]
           }
-          "path" = "/v1/sys/metrics"
-          "port" = "http"
-          "scheme" = "http"
+          "path"          = "/v1/sys/metrics"
+          "port"          = "http"
+          "scheme"        = "http"
           "scrapeTimeout" = "30s"
           "tlsConfig" = {
-            "insecureSkipVerify": "true"
+            "insecureSkipVerify" : "true"
           }
 
         },
@@ -48,8 +49,8 @@ resource "kubernetes_manifest" "servicemonitor_vault" {
       "selector" = {
         "matchLabels" = {
           "app.kubernetes.io/instance" = "vault"
-          "app.kubernetes.io/name" = "vault"
-          "vault-internal" = "true"
+          "app.kubernetes.io/name"     = "vault"
+          "vault-internal"             = "true"
         }
       }
     }

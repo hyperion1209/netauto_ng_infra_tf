@@ -11,11 +11,11 @@ locals {
     storage_class_name = "civo-volume"
   }
   enabled_services = {
-    keycloak              = true
-    vault                 = true
-    prometheus            = false
-    grafana               = false
-    kube-prometheus-stack = true
+    keycloak               = true
+    vault                  = true
+    vault-secrets-operator = true
+    kube-prometheus-stack  = true
+
   }
   ingress_services = {
     keycloak = {
@@ -32,9 +32,14 @@ locals {
     }
     vault = {
       vault = {
-        port    = 8200
+        port         = 8200
         service_name = "vault"
       }
+    }
+  }
+  keycloak_client_services = {
+    grafana = {
+      namespace       = "kube-prometheus-stack"
     }
   }
 }

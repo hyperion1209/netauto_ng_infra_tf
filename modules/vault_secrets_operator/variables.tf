@@ -1,3 +1,7 @@
-variable "storage_class_name" {
-  type = string
+variable "clients" {
+  type = map(
+    object({
+      namespace       = string
+    })
+  )
 }
