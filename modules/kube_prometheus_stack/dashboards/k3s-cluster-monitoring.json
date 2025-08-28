@@ -156,7 +156,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum (container_memory_working_set_bytes{node=~\"^$Node$\"}) / sum (machine_memory_bytes{node=~\"^$Node$\"}) * 100",
+          "expr": "(sum (node_memory_MemTotal_bytes) -sum (node_memory_MemAvailable_bytes)) / sum (node_memory_MemTotal_bytes) * 100",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -408,7 +408,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{})",
+          "expr": "sum(node_memory_MemTotal_bytes{})",
           "format": "table",
           "interval": "10s",
           "intervalFactor": 1,
@@ -489,7 +489,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(machine_memory_bytes{})",
+          "expr": "sum(node_memory_MemTotal_bytes{})",
           "format": "table",
           "instant": true,
           "interval": "10s",
