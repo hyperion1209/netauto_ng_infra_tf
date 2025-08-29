@@ -42,6 +42,12 @@ module "kube_prometheus_stack" {
   depends_on = [module.vault_secrets_operator]
 }
 
+module "pulp" {
+  source = "./modules/pulp"
+
+  depends_on = [module.vault_secrets_operator]
+}
+
 #
 # Service Ingress
 #

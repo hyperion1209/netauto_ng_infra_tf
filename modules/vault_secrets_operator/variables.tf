@@ -1,7 +1,7 @@
 variable "clients" {
   type = map(
     object({
-      namespace       = string
+      namespace = string
     })
   )
 }

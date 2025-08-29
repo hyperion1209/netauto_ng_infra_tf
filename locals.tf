@@ -39,7 +39,10 @@ locals {
   }
   keycloak_client_services = {
     grafana = {
-      namespace       = "kube-prometheus-stack"
+      namespace = "kube-prometheus-stack"
+    }
+    pulp = {
+      namespace = "pulp"
     }
   }
 }
