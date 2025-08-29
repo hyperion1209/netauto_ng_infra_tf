@@ -67,7 +67,7 @@ resource "kubernetes_manifest" "vault_static_secret" {
         "create" = true
         "name"   = "keycloak-oauth-creds"
       }
-      "mount"        = "keycloak-oauth-client-secrets"
+      "mount"        = "kv/keycloak-oauth-client-secrets"
       "path"         = "${each.key}-oauth"
       "refreshAfter" = "30s"
       "type"         = "kv-v2"
