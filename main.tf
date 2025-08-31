@@ -43,8 +43,9 @@ module "kube_prometheus_stack" {
 }
 
 module "pulp" {
-  count  = local.enabled_services.pulp ? 1 : 0
+  count              = local.enabled_services.pulp ? 1 : 0
   source = "./modules/pulp"
+  storage_class_name = local.k8s_cluster.storage_class_name
 
   depends_on = [module.vault_secrets_operator]
 }

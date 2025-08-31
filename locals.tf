@@ -15,7 +15,7 @@ locals {
     vault                  = true
     vault-secrets-operator = true
     kube-prometheus-stack  = true
-    pulp                   = false
+    pulp                   = true
     jenkins                = true
 
   }
@@ -52,6 +52,9 @@ locals {
     }
     jenkins = {
       namespace = "jenkins"
+    }
+    pulp = {
+      namespace = "pulp"
     }
   }
 }

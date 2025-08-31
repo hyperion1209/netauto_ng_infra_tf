@@ -69,3 +69,6 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 ## Known Issues
 ### Grafana
 - ~~Dashboards provisioned with Helm cannot be deleted: https://github.com/grafana/helm-charts/issues/2752~~
+
+### Pulp
+- Needs ReadWriteMany access to the PV but it looks like Civo doesn't support this. Should only be a problem when running multiple pods across multiple nodes. Problem can be worked around if all pods are bound to a single node.
