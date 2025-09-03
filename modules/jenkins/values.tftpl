@@ -5,15 +5,21 @@ controller:
     password: "changeme123"
   existingSecret: keycloak-oauth-creds
   installPlugins:
-    - kubernetes:4358.vcfd9c5a_0a_f51
+    - kubernetes:4369.va_9a_89327dd35
     - workflow-aggregator:608.v67378e9d3db_1
     - git:5.7.0
     - configuration-as-code:1985.vdda_32d0c4ea_b_
-    - prometheus:2.5.3
+    - prometheus:819.v50953a_c560dd
     - oic-auth:4.524.v38858a_b_1c6a_4
     - cloudbees-disk-usage-simple:256.v20ec4eb_884f1
   jenkinsUrl: https://jenkins.netauto-ng-dev.org
   jenkinsAdminEmail: netauto.ng@gmail.com
+  prometheus:
+    enabled: true
+    serviceMonitorAdditionalLabels:
+      release: kube-prometheus-stack
+    serviceMonitorNamespace: kube-prometheus-stack
+
   JCasC:
     securityRealm: |-
       oic:

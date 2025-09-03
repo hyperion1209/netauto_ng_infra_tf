@@ -2,7 +2,10 @@
 global:
   serverTelemetry:
     prometheusOperator: true
-
+# We are using a standalone servicemonitor deployed in the vault_agent.tf file that uses a bearer token file to get metrics
+serverTelemetry:
+  serviceMonitor:
+    enabled: false
 server:
   dataStorage:
     enabled: true
