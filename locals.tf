@@ -15,6 +15,8 @@ locals {
     vault                  = true
     vault-secrets-operator = true
     kube-prometheus-stack  = true
+    pulp                   = false
+    jenkins                = true
 
   }
   ingress_services = {
@@ -36,13 +38,20 @@ locals {
         service_name = "vault"
       }
     }
+    jenkins = {
+      jenkins = {
+        port         = 8080
+        service_name = "jenkins"
+      }
+    }
   }
+  # This creates the namespace for the service too
   keycloak_client_services = {
     grafana = {
       namespace = "kube-prometheus-stack"
     }
-    pulp = {
-      namespace = "pulp"
+    jenkins = {
+      namespace = "jenkins"
     }
   }
 }
