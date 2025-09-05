@@ -30,7 +30,7 @@ module "vault" {
 module "vault_secrets_operator" {
   count   = local.enabled_services.vault-secrets-operator && local.enabled_services.vault ? 1 : 0
   source  = "./modules/vault_secrets_operator"
-  clients = local.keycloak_client_services
+  clients = local.vso_client_services
 }
 
 module "kube_prometheus_stack" {

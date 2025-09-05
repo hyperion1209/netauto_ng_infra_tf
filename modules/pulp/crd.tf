@@ -56,7 +56,7 @@ resource "kubernetes_manifest" "pulp" {
       #     "valueFrom" = {
       #       "secretKeyRef" = {
       #         "key" = "client_id"
-      #         "name" = "keycloak-oauth-creds"
+      #         "name" = "keycloak-oauth"
       #       }
       #     }
       #   },
@@ -65,7 +65,7 @@ resource "kubernetes_manifest" "pulp" {
       #     "valueFrom" = {
       #       "secretKeyRef" = {
       #         "key" = "client_secret"
-      #         "name" = "keycloak-oauth-creds"
+      #         "name" = "keycloak-oauth"
       #       }
       #     }
       #   },

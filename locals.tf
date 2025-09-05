@@ -98,15 +98,18 @@ locals {
     }
   }
   # This creates the namespace for the service too
-  keycloak_client_services = {
+  vso_client_services = {
     grafana = {
       namespace = "kube-prometheus-stack"
+      secrets   = ["keycloak-oauth"]
     }
     jenkins = {
       namespace = "jenkins"
+      secrets   = ["keycloak-oauth"]
     }
     pulp = {
       namespace = "pulp"
+      secrets   = ["keycloak-oauth", "admin"]
     }
   }
 }

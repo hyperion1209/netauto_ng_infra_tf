@@ -10,7 +10,7 @@ resource "helm_release" "kube_prometheus_stack" {
     templatefile("${path.module}/values.tftpl", {
       grafana_url          = local.grafana_url
       keycloak_url         = local.keycloak_url
-      keycloak_secret_name = "keycloak-oauth-creds"
+      keycloak_secret_name = "keycloak-oauth"
       storage_class_name   = var.storage_class_name
     })
   ]

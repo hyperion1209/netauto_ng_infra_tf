@@ -70,10 +70,15 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 - [ ] Add sign-out url for keycloak
 
 ### Pulp
-- [ ] Add ingress following [link](https://pulpproject.org/pulp-operator/docs/admin/guides/configurations/networking/ingress.yaml)
+- [x] Add ingress following [link](https://pulpproject.org/pulp-operator/docs/admin/guides/configurations/networking/ingress.yaml)
+- [ ] Create repos
 - [ ] Enable metrics, service monitor and add dashboard
 - [ ] Create custom image with social-auth enabled
 - [ ] Enable keycloak authentication
+- [ ] Build terraform provider
+
+### VSO
+- [ ] Load vault secrets for all services
 
 ## Known Issues
 ### Grafana

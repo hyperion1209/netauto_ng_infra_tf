@@ -1,11 +1,7 @@
-resource "kubernetes_manifest" "vso_service_account" {
-  manifest = {
-    "apiVersion" = "v1"
-    "kind"       = "ServiceAccount"
-    "metadata" = {
-      "name"      = "vault-secrets-operator"
-      "namespace" = "vault-secrets-operator"
-    }
+resource "kubernetes_service_account_v1" "vso" {
+  metadata {
+    name      = "vault-secrets-operator"
+    namespace = "vault-secrets-operator"
   }
 }
 
@@ -23,7 +19,7 @@ resource "kubernetes_namespace_v1" "this" {
 resource "kubernetes_service_account_v1" "this" {
   for_each = var.clients
   metadata {
-    name      = "${each.key}-vault-access"
+    name      = "vso-vault-access"
     namespace = kubernetes_namespace_v1.this[each.key].id
   }
 }
@@ -35,7 +31,7 @@ resource "kubernetes_manifest" "vso_client_auth" {
     "apiVersion" = "secrets.hashicorp.com/v1beta1"
     "kind"       = "VaultAuth"
     "metadata" = {
-      "name"      = "${each.key}-static-auth"
+      "name"      = "vso-static-auth"
       "namespace" = each.value.namespace
     }
     "spec" = {
@@ -43,36 +39,20 @@ resource "kubernetes_manifest" "vso_client_auth" {
         "audiences" = [
           "vault",
         ]
-        "role"           = "${each.key}-keycloak-secrets"
+        "role"           = "VSO"
         "serviceAccount" = kubernetes_service_account_v1.this[each.key].metadata[0].name
       }
       "method" = "kubernetes"
-      "mount"  = "keycloak_oauth"
+      "mount"  = "vso"
     }
   }
 }
 
-resource "kubernetes_manifest" "vault_static_secret" {
-  for_each   = var.clients
+module "client_secrets" {
   depends_on = [kubernetes_manifest.vso_client_auth]
-  manifest = {
-    "apiVersion" = "secrets.hashicorp.com/v1beta1"
-    "kind"       = "VaultStaticSecret"
-    "metadata" = {
-      "name"      = "keycloak-oauth-creds"
-      "namespace" = each.value.namespace
-    }
-    "spec" = {
-      "destination" = {
-        "create" = true
-        "name"   = "keycloak-oauth-creds"
-      }
-      "mount"        = "kv/keycloak-oauth-client-secrets"
-      "path"         = "${each.key}-oauth"
-      "refreshAfter" = "30s"
-      "type"         = "kv-v2"
-      "vaultAuthRef" = "${each.key}-static-auth"
-    }
-  }
+  for_each   = var.clients
+  source     = "./client_secrets"
+  client_id  = each.key
+  namespace  = each.value.namespace
+  secrets    = each.value.secrets
 }
-
