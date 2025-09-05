@@ -78,7 +78,7 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 - [ ] Build terraform provider
 
 ### VSO
-- [ ] Load vault secrets for all services
+- [x] Load vault secrets for all services
 
 ## Known Issues
 ### Grafana
