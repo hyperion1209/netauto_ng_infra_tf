@@ -22,26 +22,78 @@ locals {
   ingress_services = {
     keycloak = {
       keycloak = {
-        port         = 80
-        service_name = "keycloak-keycloakx-http"
+        "/" = {
+          port         = 80
+          service_name = "keycloak-keycloakx-http"
+        }
       }
     }
     kube-prometheus-stack = {
       grafana = {
-        port         = 80
-        service_name = "kube-prometheus-stack-grafana"
+        "/" = {
+          port         = 80
+          service_name = "kube-prometheus-stack-grafana"
+        }
       }
     }
     vault = {
       vault = {
-        port         = 8200
-        service_name = "vault"
+        "/" = {
+          port         = 8200
+          service_name = "vault"
+        }
       }
     }
     jenkins = {
       jenkins = {
-        port         = 8080
-        service_name = "jenkins"
+        "/" = {
+          port         = 8080
+          service_name = "jenkins"
+        }
+      }
+    }
+    pulp = {
+      pulp = {
+        "/pulp/api/v3/" = {
+          port         = 24817
+          service_name = "pulp-api-svc"
+        }
+        "/auth/login/" = {
+          port         = 24817
+          service_name = "pulp-api-svc"
+        }
+        "/pulp_ansible/galaxy/" = {
+          port         = 24817
+          service_name = "pulp-api-svc"
+        }
+        "/v2/" = {
+          port         = 24817
+          service_name = "pulp-api-svc"
+        }
+        "/extensions/v2/" = {
+          port         = 24817
+          service_name = "pulp-api-svc"
+        }
+        "/token/" = {
+          port         = 24817
+          service_name = "pulp-api-svc"
+        }
+        "/pypi/" = {
+          port         = 24817
+          service_name = "pulp-api-svc"
+        }
+        "/pulp/content/" = {
+          port         = 24816
+          service_name = "pulp-content-svc"
+        }
+        "/pulp/container/" = {
+          port         = 24816
+          service_name = "pulp-content-svc"
+        }
+        "/" = {
+          port         = 24817
+          service_name = "pulp-api-svc"
+        }
       }
     }
   }

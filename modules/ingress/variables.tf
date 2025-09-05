@@ -16,9 +16,11 @@ variable "namespace" {
 
 variable "namespace_apps" {
   type = map(
-    object({
-      port         = number
-      service_name = optional(string)
-    })
+    map(
+      object({
+        port         = number
+        service_name = optional(string)
+      })
+    )
   )
 }

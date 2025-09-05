@@ -15,14 +15,17 @@ resource "kubernetes_ingress_v1" "service_ingress" {
       content {
         host = "${rule.key}.${var.domain_name}"
         http {
-          path {
-            path      = "/"
-            path_type = "Prefix"
-            backend {
-              service {
-                name = rule.value.service_name
-                port {
-                  number = rule.value.port
+          dynamic "path" {
+            for_each = var.namespace_apps[rule.key]
+            content {
+              path      = path.key
+              path_type = "Prefix"
+              backend {
+                service {
+                  name = path.value.service_name
+                  port {
+                    number = path.value.port
+                  }
                 }
               }
             }

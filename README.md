@@ -43,7 +43,8 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 ## TODO
 ### General
 - [x] Use native service ingress config in the helm charts - easier to use the ingress module
-- [ ] Get proper certificates
+- [x] Get proper certificates
+- [ ] Use external dbs for services that support them
 
 ### Prometheus
 - [x] add persistent volumes (alertmanager too)
@@ -65,6 +66,14 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 
 ### Grafana
 - [x] add persistent volumes
+- [ ] Make a new dashboard for kubernetes cluster monitoring
+- [ ] Add sign-out url for keycloak
+
+### Pulp
+- [ ] Add ingress following [link](https://pulpproject.org/pulp-operator/docs/admin/guides/configurations/networking/ingress.yaml)
+- [ ] Enable metrics, service monitor and add dashboard
+- [ ] Create custom image with social-auth enabled
+- [ ] Enable keycloak authentication
 
 ## Known Issues
 ### Grafana

@@ -44,7 +44,7 @@ module "kube_prometheus_stack" {
 
 module "pulp" {
   count              = local.enabled_services.pulp ? 1 : 0
-  source = "./modules/pulp"
+  source             = "./modules/pulp"
   storage_class_name = local.k8s_cluster.storage_class_name
 
   depends_on = [module.vault_secrets_operator]
@@ -74,7 +74,8 @@ module "ingress" {
     module.keycloak,
     module.kube_prometheus_stack,
     module.vault,
-    module.jenkins
+    module.jenkins,
+    module.pulp
   ]
 
   providers = {
