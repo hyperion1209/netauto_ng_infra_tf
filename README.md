@@ -54,11 +54,12 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 ### Keycloak
 - [x] Add client dedicated scope mapper to TF code and remove the manual one
 - [x] Grafana doesn't use http to access keycloak
-- [ ] Find a way to authenticate apps without the need for client secret in app config
 - [x] Add dashboard and service monitor for keycloak
+- [ ] Use a db to persist keycloak data
 - [ ] Create and use custom docker image with keycloak-metrics-spi installed
     - repo: https://github.com/aerogear/keycloak-metrics-spi?tab=readme-ov-file
     - extending keycloak image: https://www.keycloak.org/server/containers
+- [ ] Find a way to authenticate apps without the need for client secret in app config
 
 ### Oauth
 - [ ] Investigate using oauth2-proxy for all services
@@ -71,7 +72,8 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 
 ### Pulp
 - [x] Add ingress following [link](https://pulpproject.org/pulp-operator/docs/admin/guides/configurations/networking/ingress.yaml)
-- [ ] Create repos
+- [x] Create admin account with secret password
+- [x] Create test repos
 - [ ] Enable metrics, service monitor and add dashboard
 - [ ] Create custom image with social-auth enabled
 - [ ] Enable keycloak authentication

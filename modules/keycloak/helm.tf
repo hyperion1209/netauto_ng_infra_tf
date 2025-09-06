@@ -8,9 +8,10 @@ resource "helm_release" "keycloak" {
 
   values = [
     templatefile("${path.module}/values.tftpl", {
-      hostname       = local.hostname
-      cluster_issuer = local.cluster_issuer
-      secret_name    = local.service_name
+      hostname           = local.hostname
+      cluster_issuer     = local.cluster_issuer
+      secret_name        = local.service_name
+      storage_class_name = var.storage_class_name
     })
   ]
   timeout = 600

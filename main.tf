@@ -16,9 +16,10 @@ resource "civo_dns_domain_name" "this" {
 # Services
 #
 module "keycloak" {
-  count       = local.enabled_services.keycloak ? 1 : 0
-  source      = "./modules/keycloak"
-  domain_name = civo_dns_domain_name.this.name
+  count              = local.enabled_services.keycloak ? 1 : 0
+  source             = "./modules/keycloak"
+  domain_name        = civo_dns_domain_name.this.name
+  storage_class_name = local.k8s_cluster.storage_class_name
 }
 
 module "vault" {

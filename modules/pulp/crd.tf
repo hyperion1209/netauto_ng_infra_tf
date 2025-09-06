@@ -2,7 +2,14 @@ resource "kubernetes_manifest" "configmap_settings" {
   manifest = {
     "apiVersion" = "v1"
     "data" = {
-      "analytics" = "False"
+      "analytics"            = "False"
+      "token_server"         = "\"https://pulp.netauto-ng-dev.org/token/\""
+      "content_origin"       = "\"https://pulp.netauto-ng-dev.org\""
+      "ansible_api_hostname" = "\"https://pulp.netauto-ng-dev.org\""
+      "pypi_api_hostname"    = "\"https://pulp.netauto-ng-dev.org\""
+      "api_root"             = "\"/pulp/\""
+      "allowed_export_paths" = "[ \"/tmp\" ]"
+      "allowed_import_paths" = "[ \"/tmp\" ]"
       # "authentication_backends" = [
       #   "social_core.backends.keycloak.KeycloakOAuth2",
       # ]
@@ -49,7 +56,8 @@ resource "kubernetes_manifest" "pulp" {
       "namespace" = "pulp"
     }
     "spec" = {
-      "image" = "pulp/pulp"
+      "admin_password_secret" = "admin"
+      "image"                 = "pulp/pulp"
       # "env" = [
       #   {
       #     "name" = "SOCIAL_AUTH_KEYCLOAK_KEY"
@@ -88,9 +96,6 @@ resource "kubernetes_manifest" "pulp" {
       "file_storage_size"          = "10Gi"
       "file_storage_storage_class" = var.storage_class_name
       "worker" = {
-        "replicas" = 1
-      }
-      "web" = {
         "replicas" = 1
       }
       # "telemetry" = {
