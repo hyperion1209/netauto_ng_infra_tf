@@ -98,9 +98,6 @@ resource "kubernetes_manifest" "pulp" {
       "worker" = {
         "replicas" = 1
       }
-      # "telemetry" = {
-      #   "enabled": true
-      # }
     }
   }
 }

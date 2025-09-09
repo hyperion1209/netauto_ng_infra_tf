@@ -4,14 +4,19 @@ controller:
     username: "admin"
     password: "changeme123"
   existingSecret: keycloak-oauth
+  additionalExistingSecrets:
+    - name: "github-ssh"
+      keyName: "private-key"
   installPlugins:
-    - kubernetes:4369.va_9a_89327dd35
+    - kubernetes:4371.vb_33b_086d54a_1
     - workflow-aggregator:608.v67378e9d3db_1
     - git:5.7.0
     - configuration-as-code:1985.vdda_32d0c4ea_b_
     - prometheus:819.v50953a_c560dd
     - oic-auth:4.524.v38858a_b_1c6a_4
     - cloudbees-disk-usage-simple:256.v20ec4eb_884f1
+    - pipeline-utility-steps:2.19.0
+    - job-dsl:1.93
   jenkinsUrl: https://jenkins.netauto-ng-dev.org
   jenkinsAdminEmail: netauto.ng@gmail.com
   prometheus:
@@ -36,8 +41,46 @@ controller:
         logoutFromOpenidProvider: true
         userIdStrategy: CaseSensitive
         groupIdStrategy: CaseSensitive
-
-
-
+    configScripts:
+      credentials: |-
+        credentials:
+          system:
+            domainCredentials:
+              - credentials:
+                  - basicSSHUserPrivateKey:
+                      scope: GLOBAL
+                      id: "github-ssh-key"
+                      username: "git"
+                      description: "SSH key for GitHub"
+                      privateKeySource:
+                        directEntry:
+                          privateKey: $${github-ssh-private-key}
+      security: |-
+        security:
+          gitHostKeyVerificationConfiguration:
+            sshHostKeyVerificationStrategy: "acceptFirstConnectionStrategy"
+          scriptApproval:
+            approvedSignatures:
+              - "staticMethod org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval get"
+              - "staticMethod org.jenkinsci.plugins.scriptsecurity.scripts.languages.GroovyLanguage get"
+              - "method org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval preapprove java.lang.String org.jenkinsci.plugins.scriptsecurity.scripts.Language"
+            forceSandbox: false
+      global-libraries: |-
+        unclassified:
+          globalLibraries:
+            libraries:
+              - defaultVersion: "main"
+                name: "jenkins-pipeline-lib"
+                retriever:
+                  modernSCM:
+                    scm:
+                      git:
+                        remote: "git@github.com:netauto-ng/jenkins_pipeline_lib.git"
+                        credentialsId: "github-ssh-key"
+                        traits:
+                          - "gitBranchDiscovery"
+                          - cleanBeforeCheckout:
+                              extension:
+                                deleteUntrackedNestedRepositories: true
 persistence:
   storageClass: ${storage_class_name}

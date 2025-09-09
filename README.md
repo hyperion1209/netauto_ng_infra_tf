@@ -88,3 +88,4 @@ https://registry.terraform.io/providers/linz/keycloak/latest/docs
 
 ### Pulp
 - Needs ReadWriteMany access to the PV but it looks like Civo doesn't support this. Should only be a problem when running multiple pods across multiple nodes. Problem can be worked around if all pods are bound to a single node.
+- Enabling telemetry produces error 
