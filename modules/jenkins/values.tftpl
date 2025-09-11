@@ -7,6 +7,8 @@ controller:
   additionalExistingSecrets:
     - name: "github-ssh"
       keyName: "private-key"
+    - name: "slack-bot"
+      keyName: "token"
   installPlugins:
     - kubernetes:4371.vb_33b_086d54a_1
     - workflow-aggregator:608.v67378e9d3db_1
@@ -17,6 +19,7 @@ controller:
     - cloudbees-disk-usage-simple:256.v20ec4eb_884f1
     - pipeline-utility-steps:2.19.0
     - job-dsl:1.93
+    - slack:795.v4b_9705b_e6d47
   jenkinsUrl: https://jenkins.netauto-ng-dev.org
   jenkinsAdminEmail: netauto.ng@gmail.com
   prometheus:
@@ -47,14 +50,21 @@ controller:
           system:
             domainCredentials:
               - credentials:
-                  - basicSSHUserPrivateKey:
-                      scope: GLOBAL
-                      id: "github-ssh-key"
-                      username: "git"
-                      description: "SSH key for GitHub"
-                      privateKeySource:
-                        directEntry:
-                          privateKey: $${github-ssh-private-key}
+                - basicSSHUserPrivateKey:
+                    scope: GLOBAL
+                    id: "github-ssh-key"
+                    username: "git"
+                    description: "SSH key for GitHub"
+                    privateKeySource:
+                      directEntry:
+                        privateKey: $${github-ssh-private-key}
+                - string:
+                    scope: GLOBAL
+                    id: "slack-bot-token"
+                    description: "Token used to send slack notifications"
+                    secret: $${slack-bot-token}
+                  
+
       security: |-
         security:
           gitHostKeyVerificationConfiguration:
@@ -82,5 +92,13 @@ controller:
                           - cleanBeforeCheckout:
                               extension:
                                 deleteUntrackedNestedRepositories: true
+      slack: |-
+        unclassified:
+          slackNotifier:
+            botUser: true
+            room: "notifications"
+            sendAsText: false
+            teamDomain: "NetautoNG"
+            tokenCredentialId: "slack-bot-token"
 persistence:
   storageClass: ${storage_class_name}

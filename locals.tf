@@ -105,7 +105,7 @@ locals {
     }
     jenkins = {
       namespace = "jenkins"
-      secrets   = ["keycloak-oauth", "github-ssh"]
+      secrets   = ["keycloak-oauth", "github-ssh", "slack-bot"]
     }
     pulp = {
       namespace = "pulp"
